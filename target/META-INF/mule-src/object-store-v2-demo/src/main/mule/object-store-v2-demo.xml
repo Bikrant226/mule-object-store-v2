@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="93de8b7b-aa47-4184-ad07-45985c24c137" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="Store" doc:id="ff29ceea-ffa4-4103-ae63-ed8bca5d87c6" >
+		<http:listener doc:name="Listener" doc:id="f454c5bf-64b8-45be-b39d-07b18839e066" config-ref="HTTP_Listener_config" path="/store"/>
+		<os:store doc:name="Store" doc:id="9f4420d8-ba95-4e45-8910-5996701a451b" key="#[payload.key]">
+			<os:value ><![CDATA[#[payload.value]]]></os:value>
+		</os:store>
+	</flow>
+	<flow name="Retrieve" doc:id="97343a96-4953-4071-a246-b7fbfaf0bdeb" >
+		<http:listener doc:name="Listener" doc:id="82b3a0d1-9f1a-44c7-a810-d80f4cd760ba" config-ref="HTTP_Listener_config" path="/retrieve"/>
+		<os:retrieve doc:name="Retrieve" doc:id="205cb472-d7fa-48e0-825c-e67ba780f1a0" key="#[attributes.queryParams.key]"/>
+	</flow>
+</mule>
