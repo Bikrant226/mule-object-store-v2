@@ -17,5 +17,7 @@ http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/cu
 	<flow name="Retrieve" doc:id="97343a96-4953-4071-a246-b7fbfaf0bdeb" >
 		<http:listener doc:name="Listener" doc:id="82b3a0d1-9f1a-44c7-a810-d80f4cd760ba" config-ref="HTTP_Listener_config" path="/retrieve"/>
 		<os:retrieve doc:name="Retrieve" doc:id="205cb472-d7fa-48e0-825c-e67ba780f1a0" key="#[attributes.queryParams.key]"/>
-	</flow>
+		<logger level="INFO" doc:name="Logger" doc:id="c4ba4ff4-f9ba-4893-80c9-573e5d48e880" message="#[payload]"/>
+	
+</flow>
 </mule>
